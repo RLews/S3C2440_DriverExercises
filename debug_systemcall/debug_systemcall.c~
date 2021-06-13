@@ -1,0 +1,29 @@
+
+
+#include <errno.h>
+#include <unistd.h>
+
+
+#define __NR_SYSCALL_BASE	0x90000000
+
+
+
+void hello(char *buf, int cnt)
+{
+
+	__asm ("mov r0, %0\n"
+	     "mov r1, %1\n"
+	     "swi %2\n"
+	     :
+	     : "r"(buf), "r"(cnt), "i"(__NR_SYSCALL_BASE + 352)
+	     : "r0", "r1");
+}
+
+int main(int argc, char **argv)
+{
+	printf("app, call hello\n");
+	hello("system called!", 14);
+	return 0;
+}
+
+
